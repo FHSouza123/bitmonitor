@@ -5,7 +5,10 @@
       "src": "package.json",
       "use": "@vercel/static-build",
       "config": {
-        "buildCommand": "sh vercel-build.sh",
+        "buildCommand": "npm run build",
+        "devCommand": "npm run dev",
+        "installCommand": "npm install",
+        "framework": "vite",
         "outputDirectory": "dist"
       }
     }

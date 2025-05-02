@@ -1,3 +1,4 @@
 #!/bin/sh
 npm install
-npm run build 
+chmod +x node_modules/.bin/vite
+npx vite build 
