@@ -7,13 +7,6 @@ interface FearGreedData {
   time_until_update: number;
 }
 
-interface HistoricalData {
-  value: string;
-  value_classification: string;
-  timestamp: string;
-  time: string;
-}
-
 const translateClassification = (classification: string): string => {
   switch (classification.toLowerCase()) {
     case 'extreme fear':
@@ -32,11 +25,18 @@ const translateClassification = (classification: string): string => {
 };
 
 const GaugeMeter = ({ value }: { value: number }) => {
-  const radius = 100;
-  const strokeWidth = 15;
   const normalizedValue = Math.min(Math.max(value, 0), 100);
   const angle = (normalizedValue * 180) / 100;
   const rotation = angle - 90;
+  
+  const centerX = 110;
+  const centerY = 110;
+  const radius = 80;
+  
+  // Calculando os pontos do arco
+  const startX = centerX - radius;
+  const endX = centerX + radius;
+  const arcPath = `M ${startX} ${centerY} A ${radius} ${radius} 0 0 1 ${endX} ${centerY}`;
   
   return (
     <div className="relative w-[180px] sm:w-[220px] h-[100px] sm:h-[120px] mx-auto">
@@ -44,7 +44,6 @@ const GaugeMeter = ({ value }: { value: number }) => {
         viewBox="0 0 220 120"
         className="w-full h-full"
       >
-        {/* Fundo do medidor */}
         <defs>
           <linearGradient id="gauge-gradient" x1="0" x2="1" y1="0" y2="0">
             <stop offset="0%" stopColor="#ff4444" />
@@ -52,48 +51,55 @@ const GaugeMeter = ({ value }: { value: number }) => {
             <stop offset="100%" stopColor="#00b800" />
           </linearGradient>
         </defs>
-        
-        {/* Base do medidor */}
+
+        {/* Barra do medidor */}
         <path
-          d="M 20 110 A 90 90 0 0 1 200 110"
+          d={arcPath}
           fill="none"
           stroke="url(#gauge-gradient)"
-          strokeWidth={strokeWidth}
+          strokeWidth="10"
           strokeLinecap="round"
         />
 
         {/* Ponteiro */}
-        <g transform={`rotate(${rotation}, 110, 110)`}>
+        <g transform={`rotate(${rotation}, ${centerX}, ${centerY})`}>
           <line
-            x1="110"
-            y1="110"
-            x2="110"
-            y2="35"
+            x1={centerX}
+            y1={centerY}
+            x2={centerX}
+            y2={centerY - 60}
             stroke="#333333"
-            strokeWidth="3"
+            strokeWidth="4"
             strokeLinecap="round"
           />
         </g>
 
         {/* Círculo central */}
         <circle
-          cx="110"
-          cy="110"
-          r="18"
+          cx={centerX}
+          cy={centerY}
+          r="12"
           fill="#f7931a"
         />
 
         {/* Símbolo do Bitcoin */}
         <text
-          x="110"
-          y="117"
+          x={centerX}
+          y={centerY + 4}
           textAnchor="middle"
           fill="#ffffff"
-          fontSize="18"
+          fontSize="12"
           fontWeight="bold"
         >
           ₿
         </text>
+
+        {/* Marcadores de escala */}
+        <g style={{ opacity: 0.3 }}>
+          <line x1={startX} y1={centerY + 5} x2={startX} y2={centerY - 5} stroke="#666" strokeWidth="2" />
+          <line x1={centerX} y1={centerY + 5} x2={centerX} y2={centerY - 5} stroke="#666" strokeWidth="2" />
+          <line x1={endX} y1={centerY + 5} x2={endX} y2={centerY - 5} stroke="#666" strokeWidth="2" />
+        </g>
       </svg>
     </div>
   );
@@ -201,8 +207,8 @@ const FearGreedIndex = () => {
           </div>
           <h2 className="text-lg sm:text-xl font-bold text-gray-800">Índice Medo & Ganância</h2>
         </div>
-        <p className="text-xs sm:text-sm text-gray-500 mb-4 sm:mb-6">
-          Análise Multifatorial do Sentimento do Mercado Cripto
+        <p className="text-xs sm:text-sm text-gray-500 mb-4 sm:mb-6 capitalize">
+          análise multifatorial do sentimento do mercado cripto
         </p>
 
         <div className="space-y-4">
