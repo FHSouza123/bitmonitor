@@ -7,11 +7,12 @@
     "node": ">=18.0.0"
   },
   "scripts": {
-    "dev": "node node_modules/vite/bin/vite.js",
-    "build": "node node_modules/vite/bin/vite.js build",
+    "dev": "vite",
+    "build": "tsc && vite build",
     "postbuild": "cp dist/index.html dist/404.html",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives",
-    "preview": "node node_modules/vite/bin/vite.js preview"
+    "preview": "vite preview",
+    "vercel-build": "vite build"
   },
   "dependencies": {
     "@types/cheerio": "^0.22.35",
