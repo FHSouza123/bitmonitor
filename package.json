@@ -8,7 +8,7 @@
     "build": "vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "postinstall": "chmod +x node_modules/.bin/vite"
+    "vercel-build": "vite build"
   },
   "dependencies": {
     "@types/cheerio": "^0.22.35",
