@@ -33,7 +33,7 @@ function App() {
       {showSplash ? (
         <SplashScreen />
       ) : (
-      <div className="min-h-screen bg-gray-100">
+      <div className="min-h-screen bg-black">
           <header className="fixed-header">
             <nav className="bg-[#f7931a] text-white p-4">
               <div className="container mx-auto">

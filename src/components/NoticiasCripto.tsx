@@ -77,8 +77,8 @@ const NoticiasCripto = () => {
   return (
     <div className="container mx-auto px-4 py-6 sm:py-8">
       <div className="flex justify-between items-center mb-6 sm:mb-8">
-        <h2 className="text-2xl sm:text-3xl font-bold text-gray-800">Notícias sobre Criptomoedas</h2>
-        <div className="text-sm text-gray-500">
+        <h2 className="text-2xl sm:text-3xl font-bold text-white">Notícias sobre Criptomoedas</h2>
+        <div className="text-sm text-gray-300">
           Última atualização: {formatarData(ultimaAtualizacao.toISOString())}
         </div>
       </div>
@@ -87,7 +87,7 @@ const NoticiasCripto = () => {
         {noticias.map((noticia, index) => (
           <div
             key={index}
-            className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col"
+            className="bg-[#181818] rounded-2xl shadow-lg border border-[#232323] overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col"
           >
             {noticia.urlToImage && (
               <div className="relative h-48 overflow-hidden">
@@ -99,38 +99,13 @@ const NoticiasCripto = () => {
                 />
               </div>
             )}
-            
-            <div className="p-4 sm:p-6 flex flex-col flex-grow">
-              <a
-                href={noticia.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-lg sm:text-xl font-semibold text-blue-600 hover:text-blue-800 mb-2 line-clamp-2 hover:underline"
-              >
-                {noticia.title}
-              </a>
-              
-              <div className="flex items-center text-xs sm:text-sm text-gray-500 mb-3">
-                <span className="font-medium">{noticia.source.name}</span>
-                <span className="mx-2">•</span>
-                <span>{formatarData(noticia.publishedAt)}</span>
+            <div className="p-4 flex flex-col flex-1">
+              <h3 className="text-lg font-bold text-white mb-2 line-clamp-2">{noticia.title}</h3>
+              <p className="text-sm text-gray-300 mb-4 flex-1 line-clamp-3">{noticia.description}</p>
+              <div className="flex items-center justify-between mt-auto">
+                <span className="text-xs text-gray-400">{noticia.source.name}</span>
+                <span className="text-xs text-gray-400">{formatarData(noticia.publishedAt)}</span>
               </div>
-              
-              <p className="text-sm sm:text-base text-gray-600 line-clamp-3 mb-4 flex-grow">
-                {noticia.description}
-              </p>
-
-              <a
-                href={noticia.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center text-sm font-medium text-blue-600 hover:text-blue-800 mt-auto"
-              >
-                Ler mais
-                <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
-              </a>
             </div>
           </div>
         ))}

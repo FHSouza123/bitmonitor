@@ -110,21 +110,10 @@ const AnaliseAvancadaBTC = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">
-        ETFs de Bitcoin Spot
-      </h1>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Tabela de ETFs */}
-        <div className="bg-white rounded-lg shadow-lg p-6">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-semibold text-gray-700">
-              ETFs de Bitcoin nos EUA
-            </h2>
-            <span className="text-sm text-gray-500">
-              Atualizado em: {formatDateTime(lastUpdate)}
-            </span>
-          </div>
+      <h2 className="text-2xl font-bold text-white mb-6">ETFs de Bitcoin Spot</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div className="bg-[#181818] rounded-2xl shadow-lg border border-[#232323] p-6">
+          <h3 className="text-lg font-semibold text-white mb-4">ETFs de Bitcoin nos EUA</h3>
           {loadingStates.etfTable ? (
             <div className="flex items-center justify-center h-40">
               <div className="flex flex-col items-center">
@@ -134,27 +123,16 @@ const AnaliseAvancadaBTC = () => {
             </div>
           ) : (
             <div className="overflow-x-auto">
-              <table className="min-w-full">
+              <table className="min-w-full divide-y divide-[#232323]">
                 <thead>
-                  <tr className="bg-gray-50">
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      ETF
-                    </th>
-                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Preço
-                    </th>
-                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Variação 24h
-                    </th>
-                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Volume
-                    </th>
-                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      AUM
-                    </th>
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">ETF</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">PREÇO</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">VARIAÇÃO 24H</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">VOL</th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+                <tbody className="bg-[#181818] divide-y divide-[#232323]">
                   {etfData.map((etf) => (
                     <tr key={etf.symbol} className="hover:bg-gray-50">
                       <td className="px-6 py-4 whitespace-nowrap">
@@ -180,9 +158,6 @@ const AnaliseAvancadaBTC = () => {
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-900">
                         {formatVolume(etf.volume)}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-900">
-                        ${formatVolume(etf.aum)}
-                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -194,11 +169,8 @@ const AnaliseAvancadaBTC = () => {
           </p>
         </div>
 
-        {/* Dominância do Bitcoin */}
-        <div className="bg-white rounded-lg shadow-lg p-6">
-          <h2 className="text-xl font-semibold text-gray-700 mb-4">
-            Dominância do Bitcoin no Mercado
-          </h2>
+        <div className="bg-[#181818] rounded-2xl shadow-lg border border-[#232323] p-6">
+          <h3 className="text-lg font-semibold text-white mb-4">Dominância do Bitcoin no Mercado</h3>
           <div className="relative w-full" style={{ height: '400px' }}>
             <div className="tradingview-widget-container" style={{ height: '100%', width: '100%' }}>
               <div className="tradingview-widget-container__widget" style={{ height: '100%', width: '100%' }}>
@@ -212,11 +184,8 @@ const AnaliseAvancadaBTC = () => {
           </div>
         </div>
 
-        {/* Gráfico de Preço do Bitcoin vs ETFs */}
-        <div className="bg-white rounded-lg shadow-lg p-6 lg:col-span-2">
-          <h2 className="text-xl font-semibold text-gray-700 mb-4">
-            Preço do Bitcoin vs ETFs
-          </h2>
+        <div className="bg-[#181818] rounded-2xl shadow-lg border border-[#232323] p-6 lg:col-span-2">
+          <h2 className="text-xl font-semibold text-white mb-4">Preço do Bitcoin vs ETFs</h2>
           <div className="relative w-full" style={{ height: '500px' }}>
             <div className="tradingview-widget-container" style={{ height: '100%', width: '100%' }}>
               <div className="tradingview-widget-container__widget" style={{ height: '100%', width: '100%' }}>

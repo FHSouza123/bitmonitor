@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine, Area } from 'recharts';
 import axios from 'axios';
 import Loading from '../components/Loading';
 import FearGreedIndex from '../components/FearGreedIndex';
@@ -300,16 +300,16 @@ const Home = () => {
 
   return (
     <div className="space-y-6 pt-8">
-      <h2 className="text-3xl font-bold text-gray-800 mt-8">Cotações Atuais</h2>
+      <h2 className="text-3xl font-bold text-white mt-8">Cotações Atuais</h2>
       {isLoading ? (
         <Loading />
       ) : (
         <>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {cotacoes.map((cotacao) => (
-              <div key={cotacao.moeda} className="bg-white p-6 rounded-lg shadow-md relative overflow-hidden">
+              <div key={cotacao.moeda} className="bg-[#181818] p-6 rounded-2xl shadow-lg relative overflow-hidden border border-[#232323]">
                 {/* Ícone de fundo */}
-                <div className="absolute right-4 top-1/2 transform -translate-y-1/2 opacity-10">
+                <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
                   {cotacao.moeda === 'Bitcoin' ? (
                     <svg className="w-32 h-32 text-[#f7931a]" viewBox="0 0 64 64" fill="currentColor">
                       <path d="M63.04 39.741c-4.274 17.143-21.638 27.575-38.783 23.301C7.12 58.768-3.313 41.404.962 24.262 5.234 7.117 22.597-3.317 39.737.957c17.144 4.274 27.576 21.64 23.302 38.784z" />
@@ -324,18 +324,18 @@ const Home = () => {
 
                 {/* Conteúdo do cartão */}
                 <div className="relative z-10">
-                  <h3 className="text-xl font-semibold text-gray-700">{cotacao.moeda}</h3>
+                  <h3 className="text-xl font-semibold text-white">{cotacao.moeda}</h3>
                   <p className="text-3xl font-bold text-[#f7931a] mt-2">
                     {formatNumber(cotacao.valor)}
                   </p>
                   {cotacao.moeda === 'Bitcoin' && cotacao.valorDolar && (
-                    <p className="text-xl font-semibold text-gray-600 mt-1">
+                    <p className="text-xl font-semibold text-gray-200 mt-1">
                       {formatNumber(cotacao.valorDolar, 'USD')}
                     </p>
                   )}
-                  <p className={`mt-2 ${cotacao.variacao >= 0 ? 'text-green-600' : 'text-red-600'} flex items-center`}>
+                  <p className={`mt-2 ${cotacao.variacao >= 0 ? 'text-green-500' : 'text-red-500'} flex items-center`}>
                     {cotacao.variacao >= 0 ? '↑' : '↓'} {formatVariacao(Math.abs(cotacao.variacao))}%
-                    <span className="text-sm text-gray-500 ml-2">hoje</span>
+                    <span className="text-sm text-gray-300 ml-2">hoje</span>
                   </p>
                   {showAverage && (
                     <div className="mt-2 pt-2 border-t border-gray-200">
@@ -352,7 +352,7 @@ const Home = () => {
                       )}
                     </div>
                   )}
-                  <p className="text-sm text-gray-500 mt-2">
+                  <p className="text-sm text-gray-300 mt-2">
                     Atualizado em: {cotacao.data}
                   </p>
                 </div>
@@ -392,8 +392,8 @@ const Home = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="bg-white p-4 rounded-lg shadow-md">
-                <h3 className="text-lg font-semibold text-gray-700 mb-4">Bitcoin (USD)</h3>
+              <div className="bg-[#181818] p-4 rounded-2xl shadow-lg border border-[#232323]">
+                <h3 className="text-lg font-semibold text-white mb-4">Bitcoin (USD)</h3>
                 <div className="h-64">
                   {graphDataUSD.length > 0 ? (
                     <ResponsiveContainer width="100%" height="100%">
@@ -406,7 +406,21 @@ const Home = () => {
                           bottom: 5,
                         }}
                       >
-                        <CartesianGrid strokeDasharray="3 3" stroke="#eee" />
+                        <CartesianGrid strokeDasharray="3 3" stroke="#f3f3f3" vertical={false} horizontal={false} />
+                        <defs>
+                          <linearGradient id="orange-gradient" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stopColor="#f7931a" stopOpacity={0.25} />
+                            <stop offset="100%" stopColor="#f7931a" stopOpacity={0} />
+                          </linearGradient>
+                        </defs>
+                        <Area
+                          type="monotone"
+                          dataKey="value"
+                          stroke={undefined}
+                          fill="url(#orange-gradient)"
+                          fillOpacity={1}
+                          isAnimationActive={false}
+                        />
                         <XAxis
                           dataKey="time"
                           tick={{ fill: '#666', fontSize: 12 }}
@@ -428,10 +442,10 @@ const Home = () => {
                         <Line
                           type="monotone"
                           dataKey="value"
-                          stroke="#2563eb"
-                          strokeWidth={2}
+                          stroke="#f7931a"
+                          strokeWidth={3}
                           dot={false}
-                          activeDot={{ r: 4, fill: '#2563eb' }}
+                          activeDot={{ r: 6, fill: '#fff', stroke: '#f7931a', strokeWidth: 3 }}
                           isAnimationActive={false}
                           name="valueUSD"
                         />
@@ -458,8 +472,8 @@ const Home = () => {
                 </div>
               </div>
 
-              <div className="bg-white p-4 rounded-lg shadow-md">
-                <h3 className="text-lg font-semibold text-gray-700 mb-4">Bitcoin (BRL)</h3>
+              <div className="bg-[#181818] p-4 rounded-2xl shadow-lg border border-[#232323]">
+                <h3 className="text-lg font-semibold text-white mb-4">Bitcoin (BRL)</h3>
                 <div className="h-64">
                   {graphDataBRL.length > 0 ? (
                     <ResponsiveContainer width="100%" height="100%">
@@ -472,7 +486,21 @@ const Home = () => {
                           bottom: 5,
                         }}
                       >
-                        <CartesianGrid strokeDasharray="3 3" stroke="#eee" />
+                        <CartesianGrid strokeDasharray="3 3" stroke="#f3f3f3" vertical={false} horizontal={false} />
+                        <defs>
+                          <linearGradient id="orange-gradient2" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stopColor="#f7931a" stopOpacity={0.25} />
+                            <stop offset="100%" stopColor="#f7931a" stopOpacity={0} />
+                          </linearGradient>
+                        </defs>
+                        <Area
+                          type="monotone"
+                          dataKey="value"
+                          stroke={undefined}
+                          fill="url(#orange-gradient2)"
+                          fillOpacity={1}
+                          isAnimationActive={false}
+                        />
                         <XAxis
                           dataKey="time"
                           tick={{ fill: '#666', fontSize: 12 }}
@@ -494,10 +522,10 @@ const Home = () => {
                         <Line
                           type="monotone"
                           dataKey="value"
-                          stroke="#2563eb"
-                          strokeWidth={2}
+                          stroke="#f7931a"
+                          strokeWidth={3}
                           dot={false}
-                          activeDot={{ r: 4, fill: '#2563eb' }}
+                          activeDot={{ r: 6, fill: '#fff', stroke: '#f7931a', strokeWidth: 3 }}
                           isAnimationActive={false}
                           name="valueBRL"
                         />

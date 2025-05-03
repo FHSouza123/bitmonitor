@@ -38,7 +38,7 @@ const SplashScreen = () => {
       <div className="text-center p-4 max-w-4xl w-full">
         <div className="flex justify-center items-center mb-8">
           <svg
-            className="w-96 h-96 text-[#f7931a]"
+            className="w-96 h-96 text-[#f7931a] animate-pulse"
             viewBox="0 0 64 64"
             fill="currentColor"
           >
