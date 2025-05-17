@@ -251,7 +251,7 @@ const FearGreedIndex = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
       {/* Card Principal */}
-      <div className="bg-[#181818] rounded-2xl shadow-lg p-4 sm:p-6 border border-[#232323]">
+      <div className="bg-black/60 backdrop-blur-sm rounded-2xl shadow-lg p-4 sm:p-6 border border-[#232323]">
         <div className="flex items-center space-x-2 mb-2">
           <div className="w-6 h-6 sm:w-8 sm:h-8 bg-[#f7931a] rounded-full flex items-center justify-center">
             <span className="text-white font-bold text-sm sm:text-base">₿</span>
@@ -281,7 +281,7 @@ const FearGreedIndex = () => {
       </div>
 
       {/* Card de Valores Históricos */}
-      <div className="bg-[#181818] rounded-2xl shadow-lg p-4 sm:p-6 border border-[#232323]">
+      <div className="bg-black/60 backdrop-blur-sm rounded-2xl shadow-lg p-4 sm:p-6 border border-[#232323]">
         <h2 className="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6">Valores históricos</h2>
         <div className="space-y-4">
           <div className="flex justify-between items-center">
@@ -314,7 +314,7 @@ const FearGreedIndex = () => {
       </div>
 
       {/* Card de Próxima Atualização */}
-      <div className="bg-[#181818] rounded-2xl shadow-lg p-4 sm:p-6 border border-[#232323] relative">
+      <div className="bg-black/60 backdrop-blur-sm rounded-2xl shadow-lg p-4 sm:p-6 border border-[#232323] relative">
         <h2 className="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6">Próxima atualização</h2>
         <div className="space-y-2">
           <p className="text-base sm:text-lg text-gray-200">

@@ -3,7 +3,7 @@ const About = () => {
     <div className="space-y-6 max-w-4xl mx-auto pt-24">
       <h2 className="text-2xl md:text-3xl font-bold text-white px-4 sm:px-0">Sobre o BitMonitor</h2>
       
-      <div className="bg-[#181818] p-4 md:p-6 rounded-2xl shadow-lg space-y-6 mx-4 sm:mx-0 border border-[#232323]">
+      <div className="bg-black/60 backdrop-blur-sm p-4 md:p-6 rounded-2xl shadow-lg space-y-6 mx-4 sm:mx-0 border border-[#232323]">
         <div>
           <h3 className="text-lg md:text-xl font-semibold text-[#f7931a] mb-3">Visão Geral</h3>
           <p className="text-sm md:text-base text-gray-200">
@@ -40,6 +40,14 @@ const About = () => {
               <li className="flex items-start">
                 <span className="font-medium min-w-[140px] md:min-w-[160px] inline-block">Análise de ETFs:</span>
                 <span className="flex-1">Acompanhamento dos principais ETFs de Bitcoin</span>
+              </li>
+              <li className="flex items-start">
+                <span className="font-medium min-w-[140px] md:min-w-[160px] inline-block">Calendário de Eventos:</span>
+                <span className="flex-1">Veja os próximos eventos do universo cripto no Brasil e no mundo</span>
+              </li>
+              <li className="flex items-start">
+                <span className="font-medium min-w-[140px] md:min-w-[160px] inline-block">Mapa de Locais Cripto:</span>
+                <span className="flex-1">Encontre lugares que aceitam criptomoedas no Brasil</span>
               </li>
             </ul>
           </div>

@@ -130,7 +130,7 @@ const BitcoinProjection = ({ bitcoinUsd, dolarReal, onFieldsComplete }: BitcoinP
         {projections && (
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 pt-4 sm:pt-6">
             {/* Valor Futuro */}
-            <div className="bg-[#181818] p-4 rounded-2xl border border-[#232323]">
+            <div className="bg-black/60 backdrop-blur-sm p-4 rounded-2xl border border-[#232323]">
               <div className="flex flex-col">
                 <h3 className="text-base sm:text-lg font-semibold text-white mb-2">
                   Valor Futuro
@@ -145,7 +145,7 @@ const BitcoinProjection = ({ bitcoinUsd, dolarReal, onFieldsComplete }: BitcoinP
             </div>
 
             {/* Valorização Absoluta */}
-            <div className="bg-[#181818] p-4 rounded-2xl border border-[#232323]">
+            <div className="bg-black/60 backdrop-blur-sm p-4 rounded-2xl border border-[#232323]">
               <div className="flex flex-col">
                 <h3 className="text-base sm:text-lg font-semibold text-white mb-2">
                   Valorização Absoluta
@@ -160,7 +160,7 @@ const BitcoinProjection = ({ bitcoinUsd, dolarReal, onFieldsComplete }: BitcoinP
             </div>
 
             {/* Percentual de Valorização */}
-            <div className="bg-[#181818] p-4 rounded-2xl border border-[#232323]">
+            <div className="bg-black/60 backdrop-blur-sm p-4 rounded-2xl border border-[#232323]">
               <div className="flex flex-col">
                 <h3 className="text-base sm:text-lg font-semibold text-white mb-2">
                   Percentual de Valorização

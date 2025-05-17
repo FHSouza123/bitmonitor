@@ -1,0 +1,23 @@
+[
+  {
+    "name": "Restaurante Satoshi",
+    "lat": -23.55052,
+    "lng": -46.633308,
+    "cidade": "São Paulo",
+    "descricao": "Aceita Bitcoin e Ethereum para pagamento."
+  },
+  {
+    "name": "Café Blockchain",
+    "lat": -22.906847,
+    "lng": -43.172896,
+    "cidade": "Rio de Janeiro",
+    "descricao": "Café temático com pagamentos em cripto."
+  },
+  {
+    "name": "Loja CriptoSul",
+    "lat": -30.034647,
+    "lng": -51.217658,
+    "cidade": "Porto Alegre",
+    "descricao": "Loja de eletrônicos que aceita várias criptomoedas."
+  }
+] 

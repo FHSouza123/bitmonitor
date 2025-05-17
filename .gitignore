@@ -1,3 +1,5 @@
+git config --global user.name "Fabiano Henrique de Souza"
+git config --global user.email "fabian.230@hotmail.com"
 node_modules
 node_modules
 

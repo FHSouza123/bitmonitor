@@ -307,7 +307,7 @@ const Home = () => {
         <>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {cotacoes.map((cotacao) => (
-              <div key={cotacao.moeda} className="bg-[#181818] p-6 rounded-2xl shadow-lg relative overflow-hidden border border-[#232323]">
+              <div key={cotacao.moeda} className="bg-black/60 backdrop-blur-sm p-6 rounded-2xl shadow-lg relative overflow-hidden border border-[#232323]">
                 {/* Ícone de fundo */}
                 <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
                   {cotacao.moeda === 'Bitcoin' ? (
@@ -392,7 +392,7 @@ const Home = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="bg-[#181818] p-4 rounded-2xl shadow-lg border border-[#232323]">
+              <div className="bg-black/60 backdrop-blur-sm p-4 rounded-2xl shadow-lg border border-[#232323]">
                 <h3 className="text-lg font-semibold text-white mb-4">Bitcoin (USD)</h3>
                 <div className="h-64">
                   {graphDataUSD.length > 0 ? (
@@ -472,7 +472,7 @@ const Home = () => {
                 </div>
               </div>
 
-              <div className="bg-[#181818] p-4 rounded-2xl shadow-lg border border-[#232323]">
+              <div className="bg-black/60 backdrop-blur-sm p-4 rounded-2xl shadow-lg border border-[#232323]">
                 <h3 className="text-lg font-semibold text-white mb-4">Bitcoin (BRL)</h3>
                 <div className="h-64">
                   {graphDataBRL.length > 0 ? (

@@ -25,7 +25,8 @@
     "react-router-dom": "^6.22.1",
     "recharts": "^2.15.3",
     "typescript": "^5.2.2",
-    "vite": "^6.3.4"
+    "vite": "^6.3.4",
+    "leaflet": "^1.9.4"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^6.21.0",
