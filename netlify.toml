@@ -1,0 +1,6 @@
+[dev]
+  command = "vite --port 3003"
+  targetPort = 3003
+  port = 8900
+  functions = "netlify/functions"
+  publish = "public" 

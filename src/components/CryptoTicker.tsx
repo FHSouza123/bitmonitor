@@ -60,8 +60,8 @@ const CryptoTicker = () => {
     <div className="bg-[#1a1a1a] border-t border-b border-[#2a2a2a] h-12 sm:h-8 w-full">
       <div className="ticker-container">
         {/* Versão Mobile - Grid Scrollável */}
-        <div className="sm:hidden w-full h-full overflow-x-auto">
-          <div className="inline-flex px-4 py-2 space-x-4 min-w-full">
+        <div className="sm:hidden w-full h-full">
+          <div className="animate-scroll-fast inline-flex px-4 py-2 space-x-4 min-w-full">
             {cryptos.map((crypto) => (
               <div key={crypto.id} className="flex items-center space-x-2 whitespace-nowrap">
                 <span className="text-white text-xs">{crypto.symbol.toUpperCase()}</span>

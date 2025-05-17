@@ -25,7 +25,7 @@ const NoticiasCripto = () => {
         setError(null);
 
         const response = await fetch(
-          'https://newsapi.org/v2/everything?q=bitcoin OR criptomoeda OR blockchain&language=pt&sortBy=publishedAt&apiKey=00fba51f0e8243c8a483189b1e575212'
+          '/.netlify/functions/noticias'
         );
 
         if (!response.ok) {
