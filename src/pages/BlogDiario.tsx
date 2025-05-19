@@ -3,11 +3,10 @@ import { useState, useEffect, ChangeEvent } from 'react';
 interface Post {
   id: string;
   texto: string;
-  data: string;
-  imagem?: string; // base64, pode ser undefined em posts antigos
+  created_at: string;
+  imagem?: string;
 }
 
-const LOCAL_STORAGE_KEY = 'meu-diario-cripto-posts';
 const ADMIN_PASSWORD = '198401*Fa';
 
 const BlogDiario = () => {
@@ -19,24 +18,28 @@ const BlogDiario = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [erroImagem, setErroImagem] = useState('');
   const [erroSenha, setErroSenha] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // Carregar posts do localStorage, garantindo compatibilidade
+  // Carregar posts da API
   useEffect(() => {
-    const salvos = localStorage.getItem(LOCAL_STORAGE_KEY);
-    if (salvos) {
+    const fetchPosts = async () => {
       try {
-        const arr = JSON.parse(salvos);
-        // Garante que todos os posts tenham o campo imagem
-        setPosts(Array.isArray(arr) ? arr.map((p) => ({ imagem: '', ...p, ...p })) : []);
-      } catch {
-        setPosts([]);
+        setIsLoading(true);
+        const response = await fetch('/.netlify/functions/posts');
+        if (!response.ok) throw new Error('Erro ao carregar posts');
+        const data = await response.json();
+        setPosts(data.posts);
+      } catch (err) {
+        setError('Não foi possível carregar os posts. Por favor, tente novamente mais tarde.');
+        console.error('Erro ao carregar posts:', err);
+      } finally {
+        setIsLoading(false);
       }
-    }
-  }, []);
+    };
 
-  useEffect(() => {
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(posts));
-  }, [posts]);
+    fetchPosts();
+  }, []);
 
   const handleSenha = () => {
     if (senha === ADMIN_PASSWORD) {
@@ -65,24 +68,65 @@ const BlogDiario = () => {
     reader.readAsDataURL(file);
   };
 
-  const publicar = () => {
+  const publicar = async () => {
     if (!novoPost.trim() || !imagem) return;
-    const post: Post = {
-      id: Date.now().toString(),
-      texto: novoPost,
-      data: new Date().toLocaleString('pt-BR'),
-      imagem,
-    };
-    setPosts([post, ...posts]);
-    setNovoPost('');
-    setImagem('');
-  };
+    
+    try {
+      const response = await fetch('/.netlify/functions/posts', {
+        method: 'POST',
+        body: JSON.stringify({
+          texto: novoPost,
+          imagem
+        })
+      });
 
-  const excluirPost = (id: string) => {
-    if (window.confirm('Tem certeza que deseja excluir este post?')) {
-      setPosts(posts.filter((p) => p.id !== id));
+      if (!response.ok) throw new Error('Erro ao publicar post');
+      
+      const data = await response.json();
+      setPosts([data.post, ...posts]);
+      setNovoPost('');
+      setImagem('');
+    } catch (err) {
+      console.error('Erro ao publicar:', err);
+      alert('Não foi possível publicar o post. Por favor, tente novamente.');
     }
   };
+
+  const excluirPost = async (id: string) => {
+    if (!window.confirm('Tem certeza que deseja excluir este post?')) return;
+
+    try {
+      const response = await fetch('/.netlify/functions/posts', {
+        method: 'DELETE',
+        body: JSON.stringify({ id })
+      });
+
+      if (!response.ok) throw new Error('Erro ao excluir post');
+      
+      setPosts(posts.filter((p) => p.id !== id));
+    } catch (err) {
+      console.error('Erro ao excluir:', err);
+      alert('Não foi possível excluir o post. Por favor, tente novamente.');
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <div className="max-w-2xl mx-auto py-10 px-4 relative">
+        <div className="text-center text-gray-400">Carregando posts...</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="max-w-2xl mx-auto py-10 px-4 relative">
+        <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-600">
+          <p>{error}</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-2xl mx-auto py-10 px-4 relative">
@@ -160,13 +204,15 @@ const BlogDiario = () => {
       )}
 
       {/* Lista de posts */}
-      <div className="space-y-6">
+      <div>
         {posts.length === 0 && (
           <div className="text-gray-400 text-center">Nenhum post ainda. Que tal começar agora?</div>
         )}
         {posts.map(post => (
-          <div key={post.id} className="bg-[#232323] rounded-lg p-4 shadow border border-[#333] relative">
-            <div className="text-xs text-gray-400 mb-2">{post.data}</div>
+          <div key={post.id} className="bg-[#232323] rounded-lg p-4 shadow border border-[#333] relative mb-4">
+            <div className="text-xs text-gray-400 mb-2">
+              {new Date(post.created_at).toLocaleString('pt-BR')}
+            </div>
             {post.imagem && (
               <img src={post.imagem} alt="Imagem do post" className="mb-3 rounded max-h-64 w-auto mx-auto" />
             )}
