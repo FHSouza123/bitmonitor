@@ -1,7 +1,14 @@
 import { useEffect } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import places from '../crypto_places.json';
+
+const mockPlaces = [
+  { name: 'Restaurante Satoshi', lat: -23.55052, lng: -46.633308, cidade: 'São Paulo', descricao: 'Aceita Bitcoin e Ethereum para pagamento.' },
+  { name: 'Café Blockchain', lat: -22.906847, lng: -43.172896, cidade: 'Rio de Janeiro', descricao: 'Café temático com pagamentos em cripto.' },
+  { name: 'Loja CriptoSul', lat: -30.034647, lng: -51.217658, cidade: 'Porto Alegre', descricao: 'Loja de eletrônicos que aceita várias criptomoedas.' },
+  { name: 'Bar CriptoNorte', lat: -3.119027, lng: -60.021731, cidade: 'Manaus', descricao: 'Bar que aceita pagamentos em Bitcoin.' },
+  { name: 'Mercado BitFloripa', lat: -27.595377, lng: -48.54805, cidade: 'Florianópolis', descricao: 'Mercado local que aceita cripto.' }
+];
 
 const CryptoMap = () => {
   useEffect(() => {
@@ -10,7 +17,7 @@ const CryptoMap = () => {
       attribution: '&copy; OpenStreetMap contributors',
     }).addTo(map);
 
-    places.forEach(place => {
+    mockPlaces.forEach(place => {
       const marker = L.marker([place.lat, place.lng]).addTo(map);
       marker.bindPopup(
         `<b>${place.name}</b><br/>${place.cidade}<br/>${place.descricao}`

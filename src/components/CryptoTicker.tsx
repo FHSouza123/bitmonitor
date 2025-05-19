@@ -25,7 +25,7 @@ const CryptoTicker = () => {
   const fetchCryptoData = async () => {
     try {
       const response = await fetch(
-        'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=20&page=1'
+        'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=50&page=1'
       );
       if (!response.ok) throw new Error('Erro ao buscar dados');
       const data = await response.json();

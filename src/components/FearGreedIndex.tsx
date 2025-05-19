@@ -26,18 +26,23 @@ const translateClassification = (classification: string): string => {
 
 const GaugeMeter = ({ value }: { value: number }) => {
   const normalizedValue = Math.min(Math.max(value, 0), 100);
-  const angle = (normalizedValue * 180) / 100;
-  const rotation = angle - 90;
-  
+  const angle = (normalizedValue * 180) / 100; // 0 a 180 graus
+  const rotation = angle - 90; // -90 a 90 graus
+
   const centerX = 110;
   const centerY = 110;
   const radius = 80;
-  
+
   // Calculando os pontos do arco
   const startX = centerX - radius;
   const endX = centerX + radius;
   const arcPath = `M ${startX} ${centerY} A ${radius} ${radius} 0 0 1 ${endX} ${centerY}`;
-  
+
+  // Cálculo da posição da ponta do ponteiro
+  const rad = (Math.PI * angle) / 180; // Converter para radianos
+  const pointerX = centerX + radius * Math.cos(rad - Math.PI);
+  const pointerY = centerY + radius * Math.sin(rad - Math.PI);
+
   return (
     <div className="relative w-[180px] sm:w-[220px] h-[100px] sm:h-[120px] mx-auto">
       <svg
@@ -62,44 +67,41 @@ const GaugeMeter = ({ value }: { value: number }) => {
         />
 
         {/* Ponteiro */}
-        <g transform={`rotate(${rotation}, ${centerX}, ${centerY})`}>
-          {/* Sombra do ponteiro */}
-          <line
-            x1={centerX}
-            y1={centerY + 6}
-            x2={centerX}
-            y2={centerY - 75}
-            stroke="#000"
-            strokeWidth="8"
-            strokeLinecap="round"
-            opacity="0.15"
-            filter="url(#pointer-shadow)"
-          />
-          {/* Ponteiro principal com gradiente */}
-          <linearGradient id="pointer-gradient" x1={centerX} y1={centerY} x2={centerX} y2={centerY - 75} gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stopColor="#333" />
-            <stop offset="100%" stopColor="#f7931a" />
-          </linearGradient>
-          <line
-            x1={centerX}
-            y1={centerY + 2}
-            x2={centerX}
-            y2={centerY - 75}
-            stroke="url(#pointer-gradient)"
-            strokeWidth="7"
-            strokeLinecap="round"
-          />
-          {/* Ponta do ponteiro */}
-          <circle
-            cx={centerX}
-            cy={centerY - 75}
-            r="6"
-            fill="#f7931a"
-            stroke="#fff"
-            strokeWidth="2"
-            filter="drop-shadow(0 2px 6px #f7931a88)"
-          />
-        </g>
+        {/* Sombra do ponteiro */}
+        <line
+          x1={centerX}
+          y1={centerY + 6}
+          x2={pointerX}
+          y2={pointerY}
+          stroke="#000"
+          strokeWidth="8"
+          strokeLinecap="round"
+          opacity="0.15"
+        />
+        {/* Ponteiro principal com gradiente */}
+        <linearGradient id="pointer-gradient" x1={centerX} y1={centerY} x2={pointerX} y2={pointerY} gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#333" />
+          <stop offset="100%" stopColor="#f7931a" />
+        </linearGradient>
+        <line
+          x1={centerX}
+          y1={centerY + 2}
+          x2={pointerX}
+          y2={pointerY}
+          stroke="url(#pointer-gradient)"
+          strokeWidth="7"
+          strokeLinecap="round"
+        />
+        {/* Ponta do ponteiro (bolinha) */}
+        <circle
+          cx={pointerX}
+          cy={pointerY}
+          r="8"
+          fill="#f7931a"
+          stroke="#fff"
+          strokeWidth="2"
+          filter="drop-shadow(0 2px 6px #f7931a88)"
+        />
 
         {/* Círculo central */}
         <circle
@@ -122,7 +124,7 @@ const GaugeMeter = ({ value }: { value: number }) => {
         </text>
 
         {/* Marcadores de escala */}
-        <g style={{ opacity: 0.3 }}>
+        <g>
           <line x1={startX} y1={centerY + 5} x2={startX} y2={centerY - 5} stroke="#666" strokeWidth="2" />
           <line x1={centerX} y1={centerY + 5} x2={centerX} y2={centerY - 5} stroke="#666" strokeWidth="2" />
           <line x1={endX} y1={centerY + 5} x2={endX} y2={centerY - 5} stroke="#666" strokeWidth="2" />
@@ -324,7 +326,7 @@ const FearGreedIndex = () => {
             {formatTimeUntilUpdate(currentData.time_until_update)}
           </p>
         </div>
-        <span className="absolute left-1/2 bottom-4 transform -translate-x-1/2">
+        <span className="absolute bottom-4 right-4">
           <svg className="w-24 h-24 sm:w-36 sm:h-36 text-[#f7931a] max-w-full max-h-36" viewBox="0 0 32 32" fill="currentColor">
             <circle cx="16" cy="16" r="14" fill="#f7931a" />
             <circle cx="16" cy="16" r="11" fill="#181818" />

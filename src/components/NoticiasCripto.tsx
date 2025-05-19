@@ -87,7 +87,8 @@ const NoticiasCripto = () => {
         {noticias.map((noticia, index) => (
           <div
             key={index}
-            className="bg-[#181818] rounded-2xl shadow-lg border border-[#232323] overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col"
+            className="bg-[#181818] rounded-2xl shadow-lg border border-[#232323] overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col cursor-pointer"
+            onClick={() => window.open(noticia.url, '_blank')}
           >
             {noticia.urlToImage && (
               <div className="relative h-48 overflow-hidden">

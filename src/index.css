@@ -21,7 +21,7 @@
   display: inline-block;
   white-space: nowrap;
   padding-left: 100%;
-  animation: scroll 30s linear infinite;
+  animation: scroll 60s linear infinite;
 }
 
 /* Garante que o conteúdo seja duplicado corretamente */

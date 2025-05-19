@@ -9,6 +9,7 @@ import CryptoTicker from './components/CryptoTicker';
 import AnaliseAvancadaBTC from './components/AnaliseAvancadaBTC';
 import Eventos from './pages/Eventos';
 import Mapa from './pages/Mapa';
+import BlogDiario from './pages/BlogDiario';
 
 function App() {
   const [showSplash, setShowSplash] = useState(true);
@@ -129,6 +130,15 @@ function App() {
                         </Link>
                       </li>
                       <li>
+                        <Link to="/diario" className="hover:text-white/80 flex flex-col items-center">
+                          <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 20h9" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 4v16M8 4v16M4 4h16v16H4z" />
+                          </svg>
+                          <span className="text-sm mt-1">Diário</span>
+                        </Link>
+                      </li>
+                      <li>
                         <Link to="/sobre" className="hover:text-white/80 flex flex-col items-center">
                           <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -240,6 +250,19 @@ function App() {
                       </li>
                       <li>
                         <Link
+                          to="/diario"
+                          className="flex items-center space-x-4 text-lg"
+                          onClick={closeMenu}
+                        >
+                          <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 20h9" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 4v16M8 4v16M4 4h16v16H4z" />
+                          </svg>
+                          <span>Diário</span>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
                           to="/sobre"
                           className="flex items-center space-x-4 text-lg"
                           onClick={closeMenu}
@@ -266,6 +289,7 @@ function App() {
                 <Route path="/eventos" element={<Eventos />} />
                 <Route path="/mapa" element={<Mapa />} />
                 <Route path="/sobre" element={<About />} />
+                <Route path="/diario" element={<BlogDiario />} />
               </Routes>
             </main>
           </div>
