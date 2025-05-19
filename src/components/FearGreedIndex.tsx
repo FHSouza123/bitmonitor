@@ -327,7 +327,7 @@ const FearGreedIndex = () => {
           </p>
         </div>
         <span className="absolute bottom-4 right-4">
-          <svg className="w-24 h-24 sm:w-36 sm:h-36 text-[#f7931a] max-w-full max-h-36" viewBox="0 0 32 32" fill="currentColor">
+          <svg className="w-16 h-16 sm:w-20 sm:h-20 text-[#f7931a] max-w-full max-h-20" viewBox="0 0 32 32" fill="currentColor">
             <circle cx="16" cy="16" r="14" fill="#f7931a" />
             <circle cx="16" cy="16" r="11" fill="#181818" />
             <rect x="15" y="9" width="2" height="7" rx="1" fill="#fff" />
