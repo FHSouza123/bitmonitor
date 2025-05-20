@@ -1,6 +1,6 @@
+// Atualização Livecoins RSS2JSON - commit forçado
 import { useState, useEffect } from 'react';
 import Loading from './Loading';
-import { supabase } from '../services/supabaseClient';
 
 interface Noticia {
   title: string;
@@ -25,19 +25,18 @@ const NoticiasCripto = () => {
         setIsLoading(true);
         setError(null);
 
-        const { data, error } = await supabase
-          .from('posts')
-          .select('*')
-          .order('created_at', { ascending: false });
+        // Busca de notícias do Livecoins via RSS2JSON (sem chave)
+        const response = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https://livecoins.com.br/feed/');
+        const data = await response.json();
+        console.log('Resposta Livecoins RSS:', data);
 
-        if (error) {
-          throw new Error('Erro ao buscar notícias');
-        }
-
-        console.log('Notícias recebidas do Supabase:', data);
-        const noticiasTratadas = (data || []).map((noticia: any) => ({
-          ...noticia,
-          source: noticia.source || { name: 'Fonte desconhecida' }
+        const noticiasTratadas = (data.items || []).map((item: any) => ({
+          title: item.title || 'Sem título',
+          url: item.link || '#',
+          source: { name: 'Livecoins' },
+          publishedAt: item.pubDate || '',
+          description: item.description || '',
+          urlToImage: item.thumbnail || ''
         }));
         setNoticias(noticiasTratadas);
         setUltimaAtualizacao(new Date());
@@ -108,7 +107,9 @@ const NoticiasCripto = () => {
             )}
             <div className="p-4 flex flex-col flex-1">
               <h3 className="text-lg font-bold text-white mb-2 line-clamp-2">{noticia.title}</h3>
-              <p className="text-sm text-gray-300 mb-4 flex-1 line-clamp-3">{noticia.description}</p>
+              <p className="text-sm text-gray-300 mb-4 flex-1 line-clamp-3">
+                {noticia.description.replace(/<[^>]+>/g, '').trim()}
+              </p>
               <div className="flex items-center justify-between mt-auto">
                 <span className="text-xs text-gray-400">{noticia.source?.name || 'Fonte desconhecida'}</span>
                 <span className="text-xs text-gray-400">{formatarData(noticia.publishedAt)}</span>
