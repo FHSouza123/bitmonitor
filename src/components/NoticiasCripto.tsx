@@ -34,7 +34,12 @@ const NoticiasCripto = () => {
           throw new Error('Erro ao buscar notícias');
         }
 
-        setNoticias(data || []);
+        console.log('Notícias recebidas do Supabase:', data);
+        const noticiasTratadas = (data || []).map((noticia: any) => ({
+          ...noticia,
+          source: noticia.source || { name: 'Fonte desconhecida' }
+        }));
+        setNoticias(noticiasTratadas);
         setUltimaAtualizacao(new Date());
       } catch (err) {
         setError('Não foi possível carregar as notícias. Por favor, tente novamente mais tarde.');
@@ -105,7 +110,7 @@ const NoticiasCripto = () => {
               <h3 className="text-lg font-bold text-white mb-2 line-clamp-2">{noticia.title}</h3>
               <p className="text-sm text-gray-300 mb-4 flex-1 line-clamp-3">{noticia.description}</p>
               <div className="flex items-center justify-between mt-auto">
-                <span className="text-xs text-gray-400">{noticia.source.name}</span>
+                <span className="text-xs text-gray-400">{noticia.source?.name || 'Fonte desconhecida'}</span>
                 <span className="text-xs text-gray-400">{formatarData(noticia.publishedAt)}</span>
               </div>
             </div>
