@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Loading from './Loading';
+import { supabase } from '../services/supabaseClient';
 
 interface Noticia {
   title: string;
@@ -24,16 +25,16 @@ const NoticiasCripto = () => {
         setIsLoading(true);
         setError(null);
 
-        const response = await fetch(
-          '/.netlify/functions/noticias'
-        );
+        const { data, error } = await supabase
+          .from('posts')
+          .select('*')
+          .order('created_at', { ascending: false });
 
-        if (!response.ok) {
+        if (error) {
           throw new Error('Erro ao buscar notícias');
         }
 
-        const data = await response.json();
-        setNoticias(data.articles);
+        setNoticias(data || []);
         setUltimaAtualizacao(new Date());
       } catch (err) {
         setError('Não foi possível carregar as notícias. Por favor, tente novamente mais tarde.');

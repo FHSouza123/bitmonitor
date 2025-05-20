@@ -1,4 +1,5 @@
 import { useState, useEffect, ChangeEvent } from 'react';
+import { supabase } from '../services/supabaseClient';
 
 interface Post {
   id: string;
@@ -21,15 +22,18 @@ const BlogDiario = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Carregar posts da API
+  // Carregar posts do Supabase
   useEffect(() => {
     const fetchPosts = async () => {
       try {
         setIsLoading(true);
-        const response = await fetch('/.netlify/functions/posts');
-        if (!response.ok) throw new Error('Erro ao carregar posts');
-        const data = await response.json();
-        setPosts(data.posts);
+        setError(null);
+        const { data, error } = await supabase
+          .from('posts')
+          .select('*')
+          .order('created_at', { ascending: false });
+        if (error) throw error;
+        setPosts(data || []);
       } catch (err) {
         setError('Não foi possível carregar os posts. Por favor, tente novamente mais tarde.');
         console.error('Erro ao carregar posts:', err);
@@ -37,7 +41,6 @@ const BlogDiario = () => {
         setIsLoading(false);
       }
     };
-
     fetchPosts();
   }, []);
 
@@ -56,8 +59,8 @@ const BlogDiario = () => {
     setErroImagem('');
     const file = e.target.files?.[0];
     if (!file) return;
-    if (file.size > 1024 * 1024) {
-      setErroImagem('A imagem deve ter no máximo 1MB.');
+    if (file.size > 2 * 1024 * 1024) {
+      setErroImagem('A imagem deve ter no máximo 2MB.');
       setImagem('');
       return;
     }
@@ -70,20 +73,15 @@ const BlogDiario = () => {
 
   const publicar = async () => {
     if (!novoPost.trim() || !imagem) return;
-    
     try {
-      const response = await fetch('/.netlify/functions/posts', {
-        method: 'POST',
-        body: JSON.stringify({
-          texto: novoPost,
-          imagem
-        })
-      });
-
-      if (!response.ok) throw new Error('Erro ao publicar post');
-      
-      const data = await response.json();
-      setPosts([data.post, ...posts]);
+      const { data, error } = await supabase
+        .from('posts')
+        .insert([{ texto: novoPost, imagem }])
+        .select();
+      if (error) throw error;
+      if (data && data[0]) {
+        setPosts([data[0], ...posts]);
+      }
       setNovoPost('');
       setImagem('');
     } catch (err) {
@@ -94,15 +92,12 @@ const BlogDiario = () => {
 
   const excluirPost = async (id: string) => {
     if (!window.confirm('Tem certeza que deseja excluir este post?')) return;
-
     try {
-      const response = await fetch('/.netlify/functions/posts', {
-        method: 'DELETE',
-        body: JSON.stringify({ id })
-      });
-
-      if (!response.ok) throw new Error('Erro ao excluir post');
-      
+      const { error } = await supabase
+        .from('posts')
+        .delete()
+        .eq('id', id);
+      if (error) throw error;
       setPosts(posts.filter((p) => p.id !== id));
     } catch (err) {
       console.error('Erro ao excluir:', err);
